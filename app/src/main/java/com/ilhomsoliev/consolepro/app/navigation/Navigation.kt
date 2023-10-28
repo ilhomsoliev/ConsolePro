@@ -1,9 +1,12 @@
 package com.ilhomsoliev.consolepro.app.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.ilhomsoliev.consolepro.presentation.home.ui.HomeScreen
 import com.ilhomsoliev.consolepro.presentation.page.ui.PageDetailsScreen
 import com.ilhomsoliev.consolepro.presentation.search.ui.SearchScreen
@@ -11,6 +14,7 @@ import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun Navigation(navController: NavHostController) {
+
     NavHost(
         navController = navController,
         startDestination = Screens.Home.route

@@ -7,9 +7,10 @@ import com.ilhomsoliev.consolepro.data.local.PageModel
 import com.ilhomsoliev.consolepro.data.model.Icon
 import com.ilhomsoliev.consolepro.data.model.PageItem
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
@@ -21,25 +22,18 @@ class SearchViewModel(
     private val _resultsPages = MutableStateFlow<List<PageItem>>(emptyList())
     val resultsPages = _resultsPages.asStateFlow()
 
-    suspend fun querySearch(term: String) = viewModelScope.launch {
-        if (term.isEmpty()) {
-            _resultsPages.value = recentPages.value
-            // _uiState.update { SearchResult(recentPages.value) }
-        } else {
-            this.launch(Dispatchers.IO) {
-                async {
-                    store.queryPages(term).collect { queryPages ->
+    fun querySearch(term: String) {
+        viewModelScope.launch {
+            if (term.isEmpty()) {
+                _resultsPages.value = recentPages.value
+                // _uiState.update { SearchResult(recentPages.value) }
+            } else {
+                this.launch(Dispatchers.IO) {
+                    store.queryPages(term).onEach { queryPages ->
                         _resultsPages.value = queryPages mergeWith recentPages.value
-                        /*if (queryPages.isEmpty()) {
-
-                            _uiState.update { NoResult }
-                        } else {
-                            _uiState.update { SearchResult(queryPages mergeWith recentPages.value) }
-                        }*/
-                    }
+                    }.launchIn(viewModelScope)
                 }
             }
-
         }
     }
 
@@ -59,7 +53,6 @@ class SearchViewModel(
                     }
                 }
                 _resultsPages.value = recentPages.value
-                // _uiState.update { SearchResult(recentPages.value) }
             }
         }
     }

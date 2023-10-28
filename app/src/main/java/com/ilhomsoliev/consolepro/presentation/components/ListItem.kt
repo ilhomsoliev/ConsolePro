@@ -78,7 +78,7 @@ private fun PlatformBadge(platform: String) {
     ) {
         Text(
             text = platform,
-            style = androidx.compose.material3.MaterialTheme.typography.headlineLarge,
+            style = androidx.compose.material3.MaterialTheme.typography.headlineLarge.copy(Color.White),
         )
     }
 }

@@ -14,6 +14,7 @@ import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
@@ -39,13 +40,15 @@ fun PageDetailsContent(
     Scaffold(
         topBar = {
             TopAppBar(
+                backgroundColor = Color.Black,
                 elevation = 0.dp,
-                title = { Text(text = state.pageName) },
+                title = { Text(text = state.pageName, color = Color.White) },
                 navigationIcon = {
                     IconButton(onClick = { callback.navigateUp() }) {
                         Icon(
                             imageVector = Icons.Default.ArrowBack,
-                            contentDescription = stringResource(R.string.navigate_back)
+                            contentDescription = stringResource(R.string.navigate_back),
+                            tint = Color.White
                         )
                     }
                 }
