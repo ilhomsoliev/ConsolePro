@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase
 
 @Database(
     entities = [PageModel::class],
-    version = 1,
+    version = 2,
     exportSchema = false
 )
 abstract class ApplicationDatabase : RoomDatabase() {
@@ -15,6 +15,7 @@ abstract class ApplicationDatabase : RoomDatabase() {
     abstract fun pageDao(): PageDao
 
 }
+
 @Volatile
 private var INSTANCE: ApplicationDatabase? = null
 

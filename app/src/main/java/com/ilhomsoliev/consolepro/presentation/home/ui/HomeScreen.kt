@@ -15,7 +15,6 @@ fun HomeScreen(
     val showToolbar by vm.showToolbar.collectAsState()
     val pages by vm.pages.collectAsState()
 
-
     HomeContent(
         HomeState(
             showToolbar = showToolbar,

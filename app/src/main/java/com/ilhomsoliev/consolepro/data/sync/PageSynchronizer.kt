@@ -1,5 +1,6 @@
 package com.ilhomsoliev.consolepro.data.sync
 
+import com.ilhomsoliev.consolepro.core.printToLog
 import com.ilhomsoliev.consolepro.data.DataStoreManager
 import com.ilhomsoliev.consolepro.data.local.PageDao
 import com.ilhomsoliev.consolepro.domain.DownloadPages
@@ -19,7 +20,9 @@ class PageSynchronizer(
     val state = _state.asStateFlow()
 
     suspend fun sync(forceSync: Boolean = false) {
-        if (pageDao.getPagesAmount() == 0L) {
+        val amount = pageDao.getPagesAmount()
+        amount.printToLog()
+        if (amount == 0) {
             _state.emit(SyncState.INITIAL_SYNC)
         } else if (forceSync || checkForUpdates()) {
             _state.emit(SyncState.SYNC)
@@ -27,7 +30,6 @@ class PageSynchronizer(
             _state.emit(SyncState.IDLE)
             return
         }
-
         val result = if (updatePages()) SyncState.IDLE else SyncState.FAILED
         _state.emit(result)
     }

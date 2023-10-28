@@ -50,9 +50,9 @@ fun DependencyHandlerScope.compose() = implementation(
     "androidx.compose.ui:ui-tooling:$composeVer",
 ) and accompanist(
 ) and accompanistPermissions(
-)  and // firebase()and
- swipeRefresher(
-) and lottie()
+) and // firebase()and
+        swipeRefresher(
+        ) and lottie()
 
 val pagingVer = "3.1.1"
 
@@ -70,6 +70,7 @@ fun DependencyHandlerScope.compressor() = implementation(
 fun DependencyHandlerScope.lottie() = implementation(
     "com.airbnb.android:lottie-compose:5.2.0"
 )
+
 fun DependencyHandlerScope.okio() = implementation(
     "com.squareup.okio:okio:3.0.0"
 )
@@ -131,13 +132,13 @@ fun DependencyHandlerScope.retrofit() = implementation(
     "com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.2",
 )
 
-const val room = "2.5.2"
+const val room = "2.6.0"
 
 fun DependencyHandlerScope.room() = implementation(
     "androidx.room:room-runtime:$room",
-    //"androidx.room:room-compiler:$room",
     "androidx.room:room-ktx:$room",
-    "androidx.room:room-paging:$room",
+    // "androidx.room:room-paging:$room",
+
 )
 
 val dataStoreVer = "1.0.0"

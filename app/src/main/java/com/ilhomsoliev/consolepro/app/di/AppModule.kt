@@ -17,18 +17,18 @@ import org.koin.dsl.module
 
 fun appModule(context: Context) = module {
     single<ApplicationDatabase> { getDatabaseInstance(androidContext()) }
-
+    dataStore()
     single { DownloadPages(get(), get()) }
     single<FileSystem> { FileSystem.SYSTEM }
     single { HttpClient(OkHttp) { BrowserUserAgent() } }
     single { MarkdownParser() }
-    dataStore(context)
+
     single { get<ApplicationDatabase>().pageDao() }
     single { PageSynchronizer(get(), get(), get(), get()) }
     single { ExtractPages(get()) }
 
 }
 
-fun dataStore(context: Context) = module {
-    single { DataStoreManager(context) }
+fun dataStore() = module {
+    single { DataStoreManager(androidContext()) }
 }

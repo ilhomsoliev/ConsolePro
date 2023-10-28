@@ -21,6 +21,7 @@ fun Project.compose(enable: Boolean = true) = android {
     composeOptions {
         kotlinCompilerExtensionVersion = Config.composeCompilerVer
     }
+
 }
 
 private fun Project.android(
@@ -65,6 +66,7 @@ fun BaseAppModuleExtension.baseAppModuleConfig() {
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
+
 }
 
 fun LibraryExtension.libraryConfig() {

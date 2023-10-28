@@ -1,6 +1,5 @@
 package com.ilhomsoliev.consolepro.presentation.components
 
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 
@@ -9,6 +8,6 @@ fun SectionHeader(text: String) {
     Text(
         text = text,
         maxLines = 1,
-        style = MaterialTheme.typography.h3
+        style = androidx.compose.material3.MaterialTheme.typography.displaySmall
     )
 }

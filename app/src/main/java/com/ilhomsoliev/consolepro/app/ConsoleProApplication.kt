@@ -2,6 +2,7 @@ package com.ilhomsoliev.consolepro.app
 
 import android.app.Application
 import com.ilhomsoliev.consolepro.app.di.appModule
+import com.ilhomsoliev.consolepro.app.di.dataStore
 import com.ilhomsoliev.consolepro.app.di.repositoryModule
 import com.ilhomsoliev.consolepro.app.di.viewModelModule
 import org.koin.android.ext.koin.androidContext
@@ -18,6 +19,7 @@ class ConsoleProApplication : Application() {
             modules(
                 listOf(
                     appModule(this@ConsoleProApplication),
+                    dataStore(),
                     repositoryModule,
                     viewModelModule,
                 )

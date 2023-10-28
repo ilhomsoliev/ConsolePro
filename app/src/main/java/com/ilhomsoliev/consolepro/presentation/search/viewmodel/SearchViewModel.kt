@@ -6,6 +6,8 @@ import com.ilhomsoliev.consolepro.data.local.PageDao
 import com.ilhomsoliev.consolepro.data.local.PageModel
 import com.ilhomsoliev.consolepro.data.model.Icon
 import com.ilhomsoliev.consolepro.data.model.PageItem
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -19,20 +21,25 @@ class SearchViewModel(
     private val _resultsPages = MutableStateFlow<List<PageItem>>(emptyList())
     val resultsPages = _resultsPages.asStateFlow()
 
-    fun querySearch(term: String) = viewModelScope.launch {
+    suspend fun querySearch(term: String) = viewModelScope.launch {
         if (term.isEmpty()) {
             _resultsPages.value = recentPages.value
             // _uiState.update { SearchResult(recentPages.value) }
         } else {
-            store.queryPages(term).collect { queryPages ->
-                _resultsPages.value = queryPages mergeWith recentPages.value
-                /*if (queryPages.isEmpty()) {
+            this.launch(Dispatchers.IO) {
+                async {
+                    store.queryPages(term).collect { queryPages ->
+                        _resultsPages.value = queryPages mergeWith recentPages.value
+                        /*if (queryPages.isEmpty()) {
 
-                    _uiState.update { NoResult }
-                } else {
-                    _uiState.update { SearchResult(queryPages mergeWith recentPages.value) }
-                }*/
+                            _uiState.update { NoResult }
+                        } else {
+                            _uiState.update { SearchResult(queryPages mergeWith recentPages.value) }
+                        }*/
+                    }
+                }
             }
+
         }
     }
 

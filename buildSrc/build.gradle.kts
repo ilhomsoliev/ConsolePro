@@ -19,4 +19,5 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-gradle-plugin-api:$kotlinVer")
     implementation("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVer")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVer")
+
 }

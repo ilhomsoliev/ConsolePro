@@ -49,7 +49,7 @@ fun ListItem(
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Text(
                         text = page.name,
-                        style = MaterialTheme.typography.h3
+                        style = androidx.compose.material3.MaterialTheme.typography.displaySmall
                     )
                     if (page.platform != "Common") {
                         Spacer(Modifier.width(20.dp))
@@ -78,7 +78,7 @@ private fun PlatformBadge(platform: String) {
     ) {
         Text(
             text = platform,
-            style = MaterialTheme.typography.h4,
+            style = androidx.compose.material3.MaterialTheme.typography.headlineLarge,
         )
     }
 }

@@ -6,9 +6,11 @@ import com.ilhomsoliev.consolepro.data.local.PageDao
 import com.ilhomsoliev.consolepro.data.model.Icon
 import com.ilhomsoliev.consolepro.data.model.PageItem
 import com.ilhomsoliev.consolepro.data.sync.PageSynchronizer
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 
 class HomeViewModel(
@@ -23,7 +25,7 @@ class HomeViewModel(
     val pages = _pages.asStateFlow()
 
     private suspend fun uiState(showToolbar: Boolean = true) {
-        store.getRecentSearches().collectLatest { frequentPages ->
+        store.getRecentSearches().onEach { frequentPages ->
             if (frequentPages.size > 3) {
                 val pages = frequentPages.map { page ->
                     PageItem(page, Icon.FREQUENT_PAGE)
@@ -34,12 +36,12 @@ class HomeViewModel(
                 _showToolbar.value = showToolbar
                 _pages.value = emptyList()
             }
-        }
+        }.launchIn(viewModelScope)
     }
 
 
-    private fun collectSyncState() = viewModelScope.launch {
-        synchronizer.state.collectLatest { state ->
+    private fun collectSyncState() {
+        synchronizer.state.onEach { state ->
             state?.let {
                 if (state == PageSynchronizer.SyncState.INITIAL_SYNC) {
                     uiState(showToolbar = false)
@@ -47,12 +49,12 @@ class HomeViewModel(
                     uiState()
                 }
             }
-        }
+        }.launchIn(viewModelScope)
     }
 
     init {
         collectSyncState()
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             synchronizer.sync()
         }
     }

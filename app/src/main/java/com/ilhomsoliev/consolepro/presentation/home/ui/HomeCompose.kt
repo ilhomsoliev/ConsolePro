@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Card
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -93,7 +92,7 @@ private fun FrequentPagesCard(
 
 @Composable
 private fun SetupToolbar(showToolbar: Boolean, openSearch: () -> Unit) {
-    Crossfade(showToolbar) { toolbar ->
+    Crossfade(showToolbar, label = "") { toolbar ->
         if (toolbar) {
             Toolbar(Modifier.clickable { openSearch() }) {
                 Text(stringResource(R.string.search_field))
@@ -112,7 +111,7 @@ private fun DisplayAppName() {
     ) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             Row {
-                val style = MaterialTheme.typography.h1
+                val style = androidx.compose.material3.MaterialTheme.typography.displayLarge
                 Text(
                     text = stringResource(R.string.app_name),
                     style = style
@@ -122,7 +121,7 @@ private fun DisplayAppName() {
             Spacer(Modifier.padding(16.dp))
             Text(
                 text = stringResource(R.string.app_description),
-                style = MaterialTheme.typography.h2
+                style = androidx.compose.material3.MaterialTheme.typography.displayMedium
             )
         }
     }
